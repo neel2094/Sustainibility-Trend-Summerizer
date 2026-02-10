@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sustainability Trends Agent | PGDM AI & DS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(90deg, #2E8B57, #3CB371);
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 15px;
+            font-weight: 300;
+        }
+
+        .header .roll-no {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: inline-block;
+            margin-top: 8px;
+        }
+
+        .main-content {
+            padding: 30px;
+        }
+
+        /* Two-column layout for controls and stats */
+        .top-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .top-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .control-panel {
+            background: #f9fafc;
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid #eef2f7;
+            height: fit-content;
+        }
+
+        .control-panel h2 {
+            font-size: 20px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3CB371;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .control-panel h2 i {
+            color: #3CB371;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #4a5568;
+            font-size: 15px;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 15px;
+            background: white;
+            color: #333;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #3CB371;
+            box-shadow: 0 0 0 3px rgba(60, 179, 113, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #2E8B57, #3CB371);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #267349, #2E8B57);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(46, 139, 87, 0.3);
+        }
+
+        .btn-secondary {
+            background: #4a5568;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #2d3748;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 85, 104, 0.3);
+        }
+
+        .results-panel {
+            background: #f9fafc;
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid #eef2f7;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eef2f7;
+        }
+
+        .results-header h2 {
+            font-size: 20px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .confidence-badge {
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .confidence-high {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .confidence-medium {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .confidence-low {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Stats grid with 4 columns */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #eef2f7;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2E8B57;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #718096;
+            font-weight: 500;
+        }
+
+        /* Full-width trends section */
+        .trends-section {
+            margin-top: 30px;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid #eef2f7;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+        }
+
+        .trends-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eef2f7;
+        }
+
+        .trends-header h3 {
+            font-size: 22px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .trends-count {
+            background: #e8f5e9;
+            color: #2E8B57;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Trends grid - 2 columns */
+        .trends-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 992px) {
+            .trends-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .trend-card {
+            background: #f9fafc;
+            border-radius: 12px;
+            padding: 22px;
+            border-left: 5px solid #3CB371;
+            border: 1px solid #eef2f7;
+            transition: all 0.3s;
+            height: 100%;
+        }
+
+        .trend-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(46, 139, 87, 0.12);
+            border-left-color: #2E8B57;
+        }
+
+        .trend-number {
+            display: inline-block;
+            background: #2E8B57;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .trend-text {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .trend-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eef2f7;
+        }
+
+        .trend-category {
+            display: inline-block;
+            padding: 6px 14px;
+            background: #e8f5e9;
+            color: #2E8B57;
+            font-size: 13px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .trend-date {
+            color: #718096;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* Sources section */
+        .sources-container {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .sources-container h4 {
+            font-size: 16px;
+            color: #4a5568;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sources-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .source-tag {
+            background: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #4a5568;
+            border: 1px solid #e2e8f0;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .source-tag:hover {
+            background: #edf2f7;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #718096;
+            font-size: 14px;
+            border-top: 1px solid #eef2f7;
+            background: #f9fafc;
+            margin-top: 30px;
+        }
+
+        .footer a {
+            color: #3CB371;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Loader */
+        .loader {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .loader-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3CB371;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            color: #4a5568;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .loader-subtext {
+            color: #718096;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .loader-steps {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .loader-step {
+            background: #edf2f7;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #4a5568;
+        }
+
+        .loader-step.active {
+            background: #3CB371;
+            color: white;
+        }
+
+        /* Time context */
+        .time-context {
+            font-size: 14px;
+            color: #718096;
+            margin-top: 5px;
+            font-style: italic;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #a0aec0;
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #718096;
+        }
+
+        .empty-state p {
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Agent decisions panel */
+        .decisions-container {
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #fef9e7 0%, #fef3c7 100%);
+            border-radius: 12px;
+            border: 1px solid #fde68a;
+        }
+
+        .decisions-container h4 {
+            font-size: 18px;
+            color: #92400e;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .decisions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .decision-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #fde68a;
+            box-shadow: 0 2px 8px rgba(146, 64, 14, 0.08);
+        }
+
+        .decision-icon {
+            color: #f59e0b;
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+        .decision-text {
+            color: #92400e;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Progress indicator */
+        .progress-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 25px 0;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .progress-step {
+            text-align: center;
+        }
+
+        .progress-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            color: #718096;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .progress-step.active .progress-circle {
+            background: #3CB371;
+            color: white;
+        }
+
+        .progress-label {
+            font-size: 12px;
+            color: #718096;
+            font-weight: 500;
+        }
+
+        .progress-step.active .progress-label {
+            color: #2E8B57;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-leaf"></i> Sustainability Trends Agent</h1>
+            <p>Agentic AI System for Global Sustainability Trend Analysis</p>
+        </div>
+
+        <div class="main-content">
+            <!-- Top Section: Controls and Stats -->
+            <div class="top-section">
+                <!-- Left: Control Panel -->
+                <div class="control-panel">
+                    <h2><i class="fas fa-sliders-h"></i> Control Panel</h2>
+                    
+                    <div class="form-group">
+                        <label for="topic"><i class="fas fa-tag"></i> Select Sustainability Topic</label>
+                        <select id="topic">
+                            <option value="Climate Change">Climate Change</option>
+                            <option value="Renewable Energy" selected>Renewable Energy</option>
+                            <option value="Technology & Innovation">Technology & Innovation</option>
+                            <option value="Policy & Regulation">Policy & Regulation</option>
+                            <option value="Climate Finance">Climate Finance</option>
+                            <option value="Energy Security">Energy Security</option>
+                            <option value="Environment & Biodiversity">Environment & Biodiversity</option>
+                            <option value="Circular Economy">Circular Economy</option>
+                            <option value="Industry & Business">Industry & Business</option>
+                        </select>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-primary" onclick="fetchTrends()">
+                            <i class="fas fa-play-circle"></i> Run Analysis
+                        </button>
+                        <button class="btn btn-secondary" onclick="resetAnalysis()">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+
+                    <div class="loader" id="loader">
+                        <div class="loader-spinner"></div>
+                        <div class="loader-text">Agentic AI is analyzing sustainability trends...</div>
+                        <div class="loader-subtext">This may take 15-20 seconds as we gather and analyze data</div>
+                        
+                        <div class="loader-steps">
+                            <div class="loader-step active">Planning</div>
+                            <div class="loader-step">Scraping</div>
+                            <div class="loader-step">Analyzing</div>
+                            <div class="loader-step">Summarizing</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Results Panel -->
+                <div class="results-panel">
+                    <div class="results-header">
+                        <h2><i class="fas fa-chart-line"></i> Analysis Results</h2>
+                        <div id="confidence" class="confidence-badge">-</div>
+                    </div>
+
+                    <div id="results-content">
+                        <!-- Empty State -->
+                        <div class="empty-state" id="empty-state">
+                            <i class="fas fa-chart-bar"></i>
+                            <h3>Ready for Analysis</h3>
+                            <p>Select a sustainability topic and click "Run Analysis" to begin. The agent will scrape global news sources and identify key trends using AI-powered analysis.</p>
+                        </div>
+
+                        <!-- Results (hidden by default) -->
+                        <div id="results-data" style="display: none;">
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-value" id="quality-score">0.00</div>
+                                    <div class="stat-label">Quality Score</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value" id="headlines-analyzed">0</div>
+                                    <div class="stat-label">News Analyzed</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value" id="trends-count">0</div>
+                                    <div class="stat-label">Trends Identified</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value" id="steps-taken">0</div>
+                                    <div class="stat-label">Agent Steps</div>
+                                </div>
+                            </div>
+
+                            <div class="time-context" id="time-context"></div>
+
+                            <!-- Progress Indicator -->
+                            <div class="progress-indicator" id="progress-indicator">
+                                <div class="progress-step active">
+                                    <div class="progress-circle">1</div>
+                                    <div class="progress-label">Data Collection</div>
+                                </div>
+                                <div class="progress-step">
+                                    <div class="progress-circle">2</div>
+                                    <div class="progress-label">Analysis</div>
+                                </div>
+                                <div class="progress-step">
+                                    <div class="progress-circle">3</div>
+                                    <div class="progress-label">Trend Extraction</div>
+                                </div>
+                                <div class="progress-step">
+                                    <div class="progress-circle">4</div>
+                                    <div class="progress-label">Quality Check</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Full-width Trends Section (Hidden by default) -->
+            <div id="trends-section" style="display: none;">
+                <div class="trends-section">
+                    <div class="trends-header">
+                        <h3><i class="fas fa-bullseye"></i> Identified Trends</h3>
+                        <div class="trends-count" id="trends-count-badge">0 Trends</div>
+                    </div>
+                    
+                    <div class="trends-grid" id="trends-list"></div>
+                </div>
+
+                <!-- Sources Section -->
+                <div class="sources-container">
+                    <h4><i class="fas fa-newspaper"></i> Sources Analyzed</h4>
+                    <div class="sources-list" id="sources-list"></div>
+                </div>
+
+                <!-- Agent Decisions Section -->
+                <div class="decisions-container" id="decisions-container" style="display: none;">
+                    <h4><i class="fas fa-robot"></i> Agent Decisions & Workflow</h4>
+                    <div class="decisions-grid" id="decisions-list"></div>
+                    <div style="margin-top: 20px; font-size: 13px; color: #92400e;">
+                        <i class="fas fa-info-circle"></i> This system uses an agentic AI workflow with autonomous decision-making and tool orchestration.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><i class="fas fa-code"></i> Powered by Agentic AI with LangGraph & Autonomous Agents | 
+            <i class="fas fa-server"></i> Backend: FastAPI + LangChain | 
+            <i class="fas fa-graduation-cap"></i> PGDM AI & DS 2025-27</p>
+            <p style="margin-top: 8px; font-size: 13px;">Advanced multi-step agentic workflow for real-time sustainability trend analysis</p>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const loader = document.getElementById('loader');
+        const emptyState = document.getElementById('empty-state');
+        const resultsData = document.getElementById('results-data');
+        const confidenceBadge = document.getElementById('confidence');
+        const qualityScore = document.getElementById('quality-score');
+        const headlinesAnalyzed = document.getElementById('headlines-analyzed');
+        const trendsCount = document.getElementById('trends-count');
+        const stepsTaken = document.getElementById('steps-taken');
+        const timeContext = document.getElementById('time-context');
+        const trendsSection = document.getElementById('trends-section');
+        const trendsList = document.getElementById('trends-list');
+        const sourcesList = document.getElementById('sources-list');
+        const decisionsContainer = document.getElementById('decisions-container');
+        const decisionsList = document.getElementById('decisions-list');
+        const trendsCountBadge = document.getElementById('trends-count-badge');
+        const progressSteps = document.querySelectorAll('.progress-step');
+
+        // Fetch trends from agent
+        async function fetchTrends() {
+            const topic = document.getElementById('topic').value;
+            
+            // Show loader, hide empty state
+            loader.style.display = 'block';
+            emptyState.style.display = 'none';
+            resultsData.style.display = 'none';
+            trendsSection.style.display = 'none';
+            decisionsContainer.style.display = 'none';
+            
+            // Animate progress steps
+            animateProgressSteps();
+            
+            try {
+                const response = await fetch("http://127.0.0.1:8000/get-trends", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ topic: topic })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log("API Response:", data);
+                
+                // Hide loader
+                loader.style.display = 'none';
+                
+                // Handle error response
+                if (data.error) {
+                    showError(data.error);
+                    return;
+                }
+                
+                // Update UI with results
+                updateResultsUI(data);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                loader.style.display = 'none';
+                showError(`Failed to connect to agent: ${error.message}`);
+            }
+        }
+
+        // Animate progress steps
+        function animateProgressSteps() {
+            progressSteps.forEach((step, index) => {
+                setTimeout(() => {
+                    step.classList.add('active');
+                }, index * 500);
+            });
+        }
+
+        // Reset progress steps
+        function resetProgressSteps() {
+            progressSteps.forEach(step => {
+                step.classList.remove('active');
+            });
+        }
+
+        // Update UI with results
+        function updateResultsUI(data) {
+            console.log("Updating UI with data:", data);
+            
+            // Update confidence badge
+            const confidence = (data.confidence || 'Low').toLowerCase();
+            confidenceBadge.textContent = data.confidence || 'Low';
+            
+            // Set confidence badge class
+            confidenceBadge.className = 'confidence-badge ';
+            if (confidence.includes('high')) {
+                confidenceBadge.classList.add('confidence-high');
+            } else if (confidence.includes('medium')) {
+                confidenceBadge.classList.add('confidence-medium');
+            } else {
+                confidenceBadge.classList.add('confidence-low');
+            }
+            
+            // Update stats
+            qualityScore.textContent = data.quality_score || '0.00';
+            headlinesAnalyzed.textContent = data.headlines_analyzed || 0;
+            trendsCount.textContent = data.trends ? data.trends.length : 0;
+            stepsTaken.textContent = data.steps_taken || 0;
+            
+            // Update time context
+            timeContext.textContent = data.time_context || 'Based on latest global news (past 24-48 hours)';
+            
+            // Update trends count badge
+            trendsCountBadge.textContent = `${data.trends ? data.trends.length : 0} Trends`;
+            
+            // Update trends list with grid layout
+            trendsList.innerHTML = '';
+            
+            if (data.trends && data.trends.length > 0) {
+                data.trends.forEach((trend, index) => {
+                    const trendCard = document.createElement('div');
+                    trendCard.className = 'trend-card';
+                    
+                    // Extract date
+                    let dateText = "Recent";
+                    if (trend.date) {
+                        dateText = trend.date.split(' ')[0];
+                        if (dateText.includes('T')) {
+                            dateText = dateText.split('T')[0];
+                        }
+                    }
+                    
+                    // Format date nicely
+                    if (dateText !== "Recent") {
+                        const dateObj = new Date(dateText);
+                        dateText = dateObj.toLocaleDateString('en-US', { 
+                            year: 'numeric', 
+                            month: 'short', 
+                            day: 'numeric' 
+                        });
+                    }
+                    
+                    trendCard.innerHTML = `
+                        <div class="trend-number">${index + 1}</div>
+                        <div class="trend-text">${trend.text}</div>
+                        <div class="trend-meta">
+                            <span class="trend-category">${trend.category || 'Sustainability'}</span>
+                            <span class="trend-date"><i class="far fa-calendar"></i> ${dateText}</span>
+                        </div>
+                    `;
+                    
+                    trendsList.appendChild(trendCard);
+                });
+            } else {
+                trendsList.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 48px; color: #e53e3e; margin-bottom: 20px;"></i>
+                        <h3 style="color: #4a5568; margin-bottom: 10px;">No Trends Identified</h3>
+                        <p style="color: #718096;">Try a different topic or check if news sources are available.</p>
+                    </div>
+                `;
+            }
+            
+            // Update sources list
+            sourcesList.innerHTML = '';
+            if (data.sources_used && data.sources_used.length > 0) {
+                data.sources_used.forEach(source => {
+                    const sourceTag = document.createElement('div');
+                    sourceTag.className = 'source-tag';
+                    sourceTag.innerHTML = `<i class="fas fa-globe"></i> ${source}`;
+                    sourcesList.appendChild(sourceTag);
+                });
+            } else {
+                sourcesList.innerHTML = '<div class="source-tag"><i class="fas fa-info-circle"></i> Sources not available</div>';
+            }
+            
+            // Update agent decisions
+            if (data.agent_decisions && data.agent_decisions.length > 0) {
+                decisionsContainer.style.display = 'block';
+                decisionsList.innerHTML = '';
+                
+                data.agent_decisions.forEach(decision => {
+                    const decisionCard = document.createElement('div');
+                    decisionCard.className = 'decision-card';
+                    decisionCard.innerHTML = `
+                        <span class="decision-icon"><i class="fas fa-robot"></i></span>
+                        <span class="decision-text">${decision}</span>
+                    `;
+                    decisionsList.appendChild(decisionCard);
+                });
+                
+                // Add default decisions if needed
+                if (data.agent_decisions.length < 4) {
+                    const defaultDecisions = [
+                        "Master Agent Orchestration",
+                        "Tool-based Workflow",
+                        "News Analysis",
+                        "Trend Identification"
+                    ];
+                    
+                    defaultDecisions.forEach(decision => {
+                        if (!data.agent_decisions.includes(decision)) {
+                            const decisionCard = document.createElement('div');
+                            decisionCard.className = 'decision-card';
+                            decisionCard.innerHTML = `
+                                <span class="decision-icon"><i class="fas fa-cogs"></i></span>
+                                <span class="decision-text">${decision}</span>
+                            `;
+                            decisionsList.appendChild(decisionCard);
+                        }
+                    });
+                }
+            } else if (data.process_description) {
+                decisionsContainer.style.display = 'block';
+                decisionsList.innerHTML = `
+                    <div class="decision-card">
+                        <span class="decision-icon"><i class="fas fa-robot"></i></span>
+                        <span class="decision-text">Master Agent Orchestration</span>
+                    </div>
+                    <div class="decision-card">
+                        <span class="decision-icon"><i class="fas fa-tools"></i></span>
+                        <span class="decision-text">Tool-based Workflow</span>
+                    </div>
+                    <div class="decision-card">
+                        <span class="decision-icon"><i class="fas fa-chart-line"></i></span>
+                        <span class="decision-text">${data.headlines_analyzed || 0} articles analyzed</span>
+                    </div>
+                    <div class="decision-card">
+                        <span class="decision-icon"><i class="fas fa-bullseye"></i></span>
+                        <span class="decision-text">${data.trends ? data.trends.length : 0} trends identified</span>
+                    </div>
+                `;
+            }
+            
+            // Show results and trends section
+            resultsData.style.display = 'block';
+            trendsSection.style.display = 'block';
+            emptyState.style.display = 'none';
+            
+            // Reset progress steps for next run
+            setTimeout(() => {
+                resetProgressSteps();
+            }, 1000);
+        }
+
+        // Reset analysis
+        function resetAnalysis() {
+            emptyState.innerHTML = `
+                <i class="fas fa-chart-bar"></i>
+                <h3>Ready for Analysis</h3>
+                <p>Select a sustainability topic and click "Run Analysis" to begin. The agent will scrape global news sources and identify key trends using AI-powered analysis.</p>
+            `;
+            emptyState.style.display = 'block';
+            resultsData.style.display = 'none';
+            trendsSection.style.display = 'none';
+            loader.style.display = 'none';
+            decisionsContainer.style.display = 'none';
+            resetProgressSteps();
+        }
+
+        // Show error message
+        function showError(message) {
+            emptyState.innerHTML = `
+                <i class="fas fa-exclamation-triangle" style="color: #e53e3e;"></i>
+                <h3 style="color: #e53e3e;">Analysis Error</h3>
+                <p style="color: #e53e3e;">${message}</p>
+                <p style="font-size: 14px; margin-top: 20px; color: #718096;">Please check if the agent server is running and try again.</p>
+                <button class="btn btn-primary" onclick="resetAnalysis()" style="margin-top: 20px; padding: 12px 24px; font-size: 14px;">
+                    <i class="fas fa-redo"></i> Try Again
+                </button>
+            `;
+            emptyState.style.display = 'block';
+            resultsData.style.display = 'none';
+            trendsSection.style.display = 'none';
+        }
+
+        // Export report (placeholder)
+        async function exportReport() {
+            alert("Export feature will be implemented in the next version.");
+        }
+
+        // Show notification
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-triangle'}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            notification.style.position = 'fixed';
+            notification.style.top = '20px';
+            notification.style.right = '20px';
+            notification.style.padding = '15px 20px';
+            notification.style.borderRadius = '8px';
+            notification.style.fontWeight = '500';
+            notification.style.zIndex = '1000';
+            notification.style.boxShadow = '0 5px 20px rgba(0,0,0,0.15)';
+            notification.style.animation = 'slideIn 0.3s ease';
+            
+            if (type === 'success') {
+                notification.style.background = '#2E8B57';
+                notification.style.color = 'white';
+                notification.style.borderLeft = '4px solid #267349';
+            } else {
+                notification.style.background = '#e53e3e';
+                notification.style.color = 'white';
+                notification.style.borderLeft = '4px solid #c53030';
+            }
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            
+            .trend-card {
+                animation: fadeIn 0.5s ease-out;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            // Add Enter key support
+            document.getElementById('topic').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    fetchTrends();
+                }
+            });
+            
+            // Add click animation to buttons
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
