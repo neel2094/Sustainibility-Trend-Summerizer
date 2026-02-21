@@ -2,3 +2,7 @@ fastapi
 uvicorn
 requests
 beautifulsoup4
+python-dotenv
+langchain-openai
+langchain-core
+langgraph
