@@ -20,7 +20,7 @@ from datetime import datetime
 import json
 
 # ================== ENV & LOGGING ==================
-load_dotenv("key.env")
+load_dotenv()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
